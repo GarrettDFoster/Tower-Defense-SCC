@@ -6,13 +6,4 @@ class Monster extends Entity {
         this.delay = 0;
         this.damage = 1; //overwrite default value
     }
-
-    move(){
-        if(this.delay > 0){
-            this.delay -= 1;
-        }else{
-            
-        }
-    }
-
 }
