@@ -8,4 +8,13 @@ class ElectricFence extends Structure {
         this.cost = 10;
         this.damage = 1; //when attacked
     }
+
+    takeDamage(damage,source) {
+        this.hit_points -= damage;
+        this.giveDamage(source);
+        if (this.hit_points < 1) {
+            //entity is dead, remove from game
+            this.remove();
+        }
+    }
 }

@@ -17,7 +17,7 @@ class Entity {
         this.is_blocking = true; //default value
     }
 
-    takeDamage(damage) {
+    takeDamage(damage,source) {
         this.hit_points -= damage;
         if (this.hit_points < 1) {
             //entity is dead, remove from game
@@ -27,7 +27,7 @@ class Entity {
 
     giveDamage(target) {
         if (!this.is_dead) { //check to make sure entity is still alive before passing along damage
-            target.takeDamage(this.damage); //calls the takeDamage method of passed in entity
+            target.takeDamage(this.damage,this); //calls the takeDamage method of passed in entity
         }
     }
 

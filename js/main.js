@@ -6,7 +6,7 @@ game_state.turn = 0;
 game_state.grid = new Grid(ROWS, COLS);
 game_state.monsters = [];
 game_state.game_over = false;
-game_state.last_phase = 'Spawn'; //lets us animate the different steps to give a bit more info: shoot, 
+game_state.phase = 'Spawn'; //lets us animate the different steps to give a bit more info 
 
 //generate a bunch of inputs to place board
 var html = '<caption>Input your defense! Click "Start" when ready.</caption>';
@@ -66,7 +66,7 @@ function start() {
     window.setInterval(function () {
         /// call your function here
         update();
-    }, 1000 / 4);
+    }, 1000 / 3);
 }
 
 function pause() {
@@ -91,16 +91,17 @@ function resume() {
     el.parentNode.removeChild(el);
 }
 
-//update loops through turn order: Shoot Monsters > Move Monsters > (check for game end) > Spawn Monster
+//update loops through turn order: Shoot Monsters > Move Monsters > Spawn Monster
 function update() {
 
     if (!game_state.game_over) {
 
-        switch (game_state.last_phase) {
+        //create a shortcut to get the grid
+        var grid = game_state.grid;
 
-            case ('Spawn'):
-                //update to current phase
-                game_state.last_phase = 'Shoot';
+        switch (game_state.phase) {
+
+            case ('Shoot'):
 
                 //increment turn counter
                 game_state.turn += 1;
@@ -110,7 +111,6 @@ function update() {
                 //===
 
                 //get ordered list of tiles (diagonal closest to end, bottom right to top left, working towards start)
-                var grid = game_state.grid;
                 var tiles = grid.getTilesInRange(grid.end_tile.location, 20);
 
                 //go through each tile and check for a Tower
@@ -145,45 +145,10 @@ function update() {
                 }
                 break;
 
-            case ('Shoot'):
-
-                //===
-                //   Clean up dead monsters
-                //===
-
-                //update to current phase
-                game_state.last_phase = 'Cleanup';
-
-                var grid = game_state.grid;
-
-                //go through ordered list of monsters from game state
-                var living_monsters = [];
-                for (var i = 0; i < game_state.monsters.length; i++) {
-                    var monster = game_state.monsters[i];
-
-                    //check if monster is dead...if they are remove them from and tile (and game)
-                    if (monster.is_dead) {
-                        grid.clearTile(monster.location);
-                    } else {
-                        living_monsters.push(monster);
-                    }
-                }
-                //update game_state with set of living monsters
-                game_state.monsters = living_monsters;
-
-                //update the phase
-
-                break;
-
-            case ('Cleanup'):
+            case ('Move'):
                 //===
                 //  Move Monsters
                 //===
-
-                //update to current phase
-                game_state.last_phase = 'Move';
-
-                var grid = game_state.grid;
 
                 //go through ordered list of monsters from game state (first monster created moves first, last monster created moves last)
                 for (var i = 0; i < game_state.monsters.length; i++) {
@@ -217,10 +182,9 @@ function update() {
 
                     }
                 }
-
                 break;
 
-            case ('Move'):
+            case ('Spawn'):
                 //===
                 //  Spawn Monsters
                 //===
@@ -243,23 +207,41 @@ function update() {
                     game_state.monsters.push(new_monster);
 
                 }
+        }
 
-                //===
-                //  Check for game end
-                //===
+        //===
+        //   Clean up dead monsters
+        //===
 
-                if (!grid.end_tile.is_empty && grid.end_tile.occupant instanceof Monster) {
-                    game_state.game_over = true;
-                    clearInterval();
-                }
-                break;
+        //go through ordered list of monsters from game state
+        var living_monsters = [];
+        for (var i = 0; i < game_state.monsters.length; i++) {
+            var monster = game_state.monsters[i];
+
+            //check if monster is dead...if they are remove them from and tile (and game)
+            if (monster.is_dead) {
+                grid.clearTile(monster.location);
+            } else {
+                living_monsters.push(monster);
+            }
+        }
+        //update game_state with set of living monsters
+        game_state.monsters = living_monsters;
+
+        //===
+        //  Check for game end
+        //===
+
+        if (!grid.end_tile.is_empty && grid.end_tile.occupant instanceof Monster) {
+            game_state.game_over = true;
+            clearInterval();
         }
 
         //===
         //  Draw current state to screen
         //===
 
-        var html = '<caption>Turn Number: ' + game_state.turn + ', Phase: ' + game_state.last_phase + '</caption>';
+        var html = '<caption>Turn Number: ' + game_state.turn + ', Phase: ' + game_state.phase + '</caption>';
         for (var i = 0; i < grid.rows; i++) {
             html += '<tr>';
             for (var j = 0; j < grid.columns; j++) {
@@ -273,6 +255,21 @@ function update() {
             html += '</tr>';
         }
         document.getElementById('game_board').innerHTML = html;
+
+        //update phase
+        switch (game_state.phase) {
+            case ('Shoot'):
+                game_state.phase = 'Move';
+                break;
+            case ('Move'):
+                game_state.phase = 'Spawn';
+                break;
+            case ('Spawn'):
+                game_state.phase = 'Shoot';
+                break;
+            default:
+                break;
+        }
     }
 }
 
