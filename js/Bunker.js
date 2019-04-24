@@ -1,5 +1,7 @@
 class Bunker extends Tower{
     description = 'Structure used to lightly damage multiple monsters.';
+    label = '(B)';
+    bg_color = '#EAEDED';
     
     constructor(location) {
         super(location, 20);

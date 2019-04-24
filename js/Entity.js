@@ -5,6 +5,9 @@ class Entity {
     location; //2-element array containing row and column identifier
     is_dead; //boolean used to flag entities for removal from gameboard after each partial step
     is_blocking; //boolean used to determine if entity blocks other entities from entering tile
+    label = '?';
+    bg_color = '#FFFFFF';
+    txt_color = '#000000';
 
     constructor(location, hit_points) {
         this.location = location;

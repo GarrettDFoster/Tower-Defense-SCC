@@ -1,5 +1,7 @@
 class SniperTower extends Tower{
     description = 'Structure used to heavily damage a single monster.';
+    label = '(S)';
+    bg_color = '#E8DAEF';
     
     constructor(location) {
         super(location, 5);

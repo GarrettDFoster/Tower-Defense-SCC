@@ -1,5 +1,7 @@
 class WaterTrap extends Trap {
     description = 'Structure used to slow a single monster.';
+    label = 'W';
+    bg_color = '#D6EAF8';
 
     constructor(location) {
         super(location, 100);

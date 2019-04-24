@@ -1,5 +1,7 @@
 class TigerTrap extends Trap {
     description = 'Structure used to damage and slow a single monster.';
+    label = 'T';
+    bg_color = '#F8C471';
 
     constructor(location) {
         super(location, 10);

@@ -8,7 +8,10 @@ game_state.monsters = [];
 game_state.game_over = false;
 
 //need a way to add towers to board before starting
-game_state.grid.tiles[6][0].occupant = new SniperTower([6,0]); //testing
+game_state.grid.tiles[5][0].occupant = new SniperTower([5, 0]); //testing
+game_state.grid.tiles[6][0].occupant = new Bunker([6, 0]); //testing
+game_state.grid.tiles[0][8].occupant = new Bunker([0,8]);
+game_state.grid.tiles[7][0].occupant = new WaterTrap([7,0]);
 
 //update loops through turn order: Shoot Monsters > Move Monsters > (check for game end) > Spawn Monster
 function update() {
@@ -131,30 +134,32 @@ function update() {
 
         if (!grid.end_tile.is_empty && grid.end_tile.occupant instanceof Monster) {
             game_state.game_over = true;
+            clearInterval();
         }
 
         //===
         //  Draw current state to screen
         //===
 
-        var html = '<table border = "1" width = "500 px"><tbody>';
+        var html = '<caption>Turn Number: ' + game_state.turn + '</caption>';
         for (var i = 0; i < grid.rows; i++) {
             html += '<tr>';
             for (var j = 0; j < grid.columns; j++) {
                 var t = grid.tiles[i][j];
-                if(t.is_empty){
-                    html += '<td width="10%"></td>';
-                }else if(t.occupant instanceof Monster){
-                    html += '<td>M' + t.occupant.hit_points + '</td>';
-                }else{
-                    html += '<td>S' + t.occupant.hit_points + '</td>';
+                if (t.is_empty) {
+                    html += '<td>&nbsp;</td>';
+                } else {
+                    html += '<td bgcolor="' + t.occupant.bg_color + '">' + t.occupant.label + '<sup>' + t.occupant.hit_points + '</sup></td>';
                 }
             }
             html += '</tr>';
         }
-        html += '</tbody></table>';
-        document.getElementsByTagName('body')[0].innerHTML = html;
-
-
+        document.getElementById('game_board').innerHTML = html;
     }
 }
+
+//call update once to initialize
+window.setInterval(function () {
+    /// call your function here
+    update();
+}, 1000);
