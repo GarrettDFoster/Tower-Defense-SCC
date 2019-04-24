@@ -7,11 +7,58 @@ game_state.grid = new Grid(ROWS, COLS);
 game_state.monsters = [];
 game_state.game_over = false;
 
-//need a way to add towers to board before starting
-game_state.grid.tiles[5][0].occupant = new SniperTower([5, 0]); //testing
-game_state.grid.tiles[6][0].occupant = new Bunker([6, 0]); //testing
-game_state.grid.tiles[0][8].occupant = new Bunker([0,8]);
-game_state.grid.tiles[7][0].occupant = new WaterTrap([7,0]);
+//generate a bunch of inputs to place board
+var html = '<caption>Input your defense! Click "Start" when ready.</caption>';
+for (var i = 0; i < ROWS; i++) {
+    html += '<tr>';
+    for (var j = 0; j < COLS; j++) {
+        html += '<td><input type="text" minlength="0" maxlength="1" size="2"></td>';
+    }
+    html += '</tr>';
+}
+document.getElementById('game_board').innerHTML = html;
+document.getElementById('start_button').addEventListener('click', start);
+
+function start() {
+    //go through and build board from inputs
+    var table = document.getElementById('game_board');
+    for (var i = 0; i < ROWS; i++) {
+        var row = table.getElementsByTagName('tr')[i];
+        for (var j = 0; j < COLS; j++) {
+            var td = row.getElementsByTagName('td')[j];
+            var input = td.getElementsByTagName('input')[0];
+
+            switch (input.value.toUpperCase()) {
+                case ('S'):
+                    game_state.grid.tiles[i][j].occupant = new SniperTower([i, j]);
+                    break;
+                case ('B'):
+                    game_state.grid.tiles[i][j].occupant = new Bunker([i, j]);
+                    break;
+                case ('F'):
+                    game_state.grid.tiles[i][j].occupant = new Forest([i, j]);
+                    break;
+                case ('E'):
+                    game_state.grid.tiles[i][j].occupant = new ElectricFence([i, j]);
+                    break;
+                case ('T'):
+                    game_state.grid.tiles[i][j].occupant = new TigerTrap([i, j]);
+                    break;
+                case ('W'):
+                    game_state.grid.tiles[i][j].occupant = new WaterTrap([i, j]);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    //call update once to initialize
+    window.setInterval(function () {
+        /// call your function here
+        update();
+    }, 1000);
+}
 
 //update loops through turn order: Shoot Monsters > Move Monsters > (check for game end) > Spawn Monster
 function update() {
@@ -158,8 +205,3 @@ function update() {
     }
 }
 
-//call update once to initialize
-window.setInterval(function () {
-    /// call your function here
-    update();
-}, 1000);
