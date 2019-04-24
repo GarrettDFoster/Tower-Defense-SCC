@@ -53,11 +53,41 @@ function start() {
         }
     }
 
+    el = document.getElementById('start_button');
+    button = document.createElement('button');
+    button.id = 'pause_button';
+    button.innerText = "Pause";
+    button.addEventListener('click',pause);
+    el.parentNode.insertBefore(button,el);    
+    el.parentNode.removeChild(el);    
+
     //call update once to initialize
     window.setInterval(function () {
         /// call your function here
         update();
     }, 1000);
+}
+
+function pause(){
+    game_state.game_over = true;
+    el = document.getElementById('pause_button');
+    button = document.createElement('button');
+    button.id = 'resuem_button';
+    button.innerText = "Resume";
+    button.addEventListener('click',resume);
+    el.parentNode.insertBefore(button,el);    
+    el.parentNode.removeChild(el);     
+}
+
+function resume(){
+    game_state.game_over = false;
+    el = document.getElementById('resume_button');
+    button = document.createElement('button');
+    button.id = 'pause_button';
+    button.innerText = "Pause";
+    button.addEventListener('click',pause);
+    el.parentNode.insertBefore(button,el);    
+    el.parentNode.removeChild(el);     
 }
 
 //update loops through turn order: Shoot Monsters > Move Monsters > (check for game end) > Spawn Monster
