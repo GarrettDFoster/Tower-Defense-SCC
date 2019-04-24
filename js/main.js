@@ -6,7 +6,7 @@ game_state.turn = 0;
 game_state.grid = new Grid(ROWS, COLS);
 game_state.monsters = [];
 game_state.game_over = false;
-game_state.last_phase = 'spawn'; //lets us animate the different steps to give a bit more info: shoot, 
+game_state.last_phase = 'Spawn'; //lets us animate the different steps to give a bit more info: shoot, 
 
 //generate a bunch of inputs to place board
 var html = '<caption>Input your defense! Click "Start" when ready.</caption>';
@@ -66,7 +66,7 @@ function start() {
     window.setInterval(function () {
         /// call your function here
         update();
-    }, 1000/3);
+    }, 1000 / 4);
 }
 
 function pause() {
@@ -98,9 +98,9 @@ function update() {
 
         switch (game_state.last_phase) {
 
-            case ('spawn'):
+            case ('Spawn'):
                 //update to current phase
-                game_state.last_phase = 'shoot';
+                game_state.last_phase = 'Shoot';
 
                 //increment turn counter
                 game_state.turn += 1;
@@ -143,10 +143,18 @@ function update() {
                         }
                     }
                 }
+                break;
+
+            case ('Shoot'):
 
                 //===
                 //   Clean up dead monsters
                 //===
+
+                //update to current phase
+                game_state.last_phase = 'Cleanup';
+
+                var grid = game_state.grid;
 
                 //go through ordered list of monsters from game state
                 var living_monsters = [];
@@ -167,13 +175,13 @@ function update() {
 
                 break;
 
-            case ('shoot'):
+            case ('Cleanup'):
                 //===
                 //  Move Monsters
                 //===
 
                 //update to current phase
-                game_state.last_phase = 'move';
+                game_state.last_phase = 'Move';
 
                 var grid = game_state.grid;
 
@@ -206,13 +214,14 @@ function update() {
                 }
 
                 break;
-            case ('move'):
+
+            case ('Move'):
                 //===
                 //  Spawn Monsters
                 //===
 
                 //update to current phase
-                game_state.last_phase = 'spawn';
+                game_state.last_phase = 'Spawn';
 
                 var grid = game_state.grid;
 
@@ -245,7 +254,7 @@ function update() {
         //  Draw current state to screen
         //===
 
-        var html = '<caption>Turn Number: ' + game_state.turn + '</caption>';
+        var html = '<caption>Turn Number: ' + game_state.turn + ', Phase: ' + game_state.last_phase + '</caption>';
         for (var i = 0; i < grid.rows; i++) {
             html += '<tr>';
             for (var j = 0; j < grid.columns; j++) {
