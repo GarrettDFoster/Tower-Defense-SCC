@@ -14,3 +14,8 @@ table {
     vertical-align: middle;
     padding: 0;
   }
+
+  #wrapper{
+    display: grid;
+    grid-template-columns: 520px 280px;
+  }
