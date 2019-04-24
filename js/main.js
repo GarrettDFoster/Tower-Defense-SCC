@@ -72,7 +72,7 @@ function pause(){
     game_state.game_over = true;
     el = document.getElementById('pause_button');
     button = document.createElement('button');
-    button.id = 'resuem_button';
+    button.id = 'resume_button';
     button.innerText = "Resume";
     button.addEventListener('click',resume);
     el.parentNode.insertBefore(button,el);    
