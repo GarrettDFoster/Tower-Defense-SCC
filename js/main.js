@@ -196,13 +196,18 @@ function update() {
                     for (var j = 0; j < possible_moves.length; j++) {
                         var move_tile = possible_moves[j];
 
-                        if (move_tile.is_blocked && move_tile.occupant instanceof Structure) {
-                            //damage structures in way
-                            monster.giveDamage(move_tile.occupant);
+                        if (move_tile.is_blocked) {
+                            if (move_tile.occupant instanceof Structure) {
+                                //damage structures in way
+                                monster.giveDamage(move_tile.occupant);
 
-                            //check for and remove broken structures
-                            if (move_tile.occupant.is_dead) {
-                                move_tile.clear();
+                                //check for and remove broken structures
+                                if (move_tile.occupant.is_dead) {
+                                    move_tile.clear();
+                                }
+                            } else {
+                                //cannot move through monsters
+                                continue;
                             }
                         } else {
                             //else update position of monster
