@@ -7,7 +7,7 @@ game_state.turn = 0;
 game_state.grid = new Grid(ROWS, COLS);
 game_state.monsters = [];
 game_state.game_over = false;
-game_state.phase = 'Spawn'; //lets us animate the different steps to give a bit more info 
+game_state.phase = 'Shoot'; //lets us animate the different steps to give a bit more info 
 
 //generate a bunch of inputs to place board
 var html = '<caption>Input your defense! Click "Start" when ready.</caption>';
