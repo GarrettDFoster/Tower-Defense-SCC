@@ -1,13 +1,10 @@
 class Tile {
     location;
-    occupant = undefined; //this is the Entity (Structure or Monster) that occupies the tile. Only one Entity may occupy a tile at a time
+    occupant = undefined; //this is the Entity (Structure or Monster) that occupies the tile
+    trap = undefined; //this is a hack to keep the traps from dissapearing
 
     constructor(row, column) {
         this.location = [row,column];
-    }
-
-    clear() {
-        this.occupant = undefined;
     }
 
     get is_empty() {
@@ -23,6 +20,17 @@ class Tile {
             return true;
         } else {
             return false;
+        }
+    }
+
+    clear() {
+        this.occupant = undefined;
+    }
+
+    add(entity){
+        this.occupant = entity;
+        if(entity instanceof Trap){
+            this.trap = entity;
         }
     }
 }

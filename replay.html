@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="js/Tile.js"></script>
+    <script src="js/Grid.js"></script>
+    <script src="js/Entity.js"></script>
+    <script src="js/Monster.js"></script>
+    <script src="js/Structure.js"></script>
+    <script src="js/Forest.js"></script>
+    <script src="js/ElectricFence.js"></script>
+    <script src="js/Tower.js"></script>
+    <script src="js/Bunker.js"></script>
+    <script src="js/SniperTower.js"></script>
+    <script src="js/Trap.js"></script>
+    <script src="js/TigerTrap.js"></script>
+    <script src="js/WaterTrap.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div>
+            <table id='game_board'></table>
+        </div>
+        <div>
+            <button id='start_button'>Start</button>
+            <p>Cost: $<span id='cost'>0</span> of $<span id='budget'>0</span></p>
+            <ul>
+                <li>S = Sniper Tower ($20)</li>
+                <li>B = Bunker ($15)</li>
+                <li>F = Forest ($2)</li>
+                <li>E = Electric Fence ($10)</li>
+                <li>T = Tiger Trap ($5)</li>
+                <li>W = Water Trap ($2)</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -65,7 +65,7 @@ class Grid {
                 }
             }
             //for the last diagonal (side = 4) we want to stop 1 step early to avoid duplicates
-            for (var step = 0; step < i-1; step++) {
+            for (var step = 0; step < i - 1; step++) {
                 current_location[0] += diagonal_move[side][0];
                 current_location[1] += diagonal_move[side][1];
                 if (current_location[0] >= 0 && current_location[0] < this.rows && current_location[1] >= 0 && current_location[1] < this.columns) {
@@ -76,16 +76,44 @@ class Grid {
         return tile_list;
     }
 
-    clearTile(location){
-        this.tiles[location[0]][location[1]].clear();
+    clearTile(location) {
+        var t = this.tiles[location[0]][location[1]];
+        t.add(t.trap);
     }
 
-    move(entity,new_location) {
-        var old_location = entity.location.concat();
-        this.tiles[old_location[0]][old_location[1]].clear();
-        this.tiles[new_location[0]][new_location[1]].occupant = entity;
-        entity.location = new_location;
-    }
+    move(entity, new_location) {
+        if (entity.delay > 0) {
+            entity.delay -= 1;
+        } else {
+            var old_tile = this.tiles[entity.location[0]][entity.location[1]];
+            var new_tile = this.tiles[new_location[0]][new_location[1]];
 
+            //update new tile
+            if (new_tile.trap) {
+                //delay the monster
+                entity.delay = new_tile.trap.delay;
+
+                //damage the monster
+                new_tile.trap.giveDamage(entity);
+
+                //damage the trap
+                entity.giveDamage(new_tile.trap);
+            }
+            if (!entity.is_dead) {
+                //update the tile's occupant
+                new_tile.add(entity);
+
+                //update the entities location
+                entity.location = new_tile.location;
+            }
+
+            //update old tile's occupant
+            if (old_tile.trap) {
+                old_tile.add(old_tile.trap);
+            } else {
+                old_tile.clear();
+            }
+        }
+    }
 
 }

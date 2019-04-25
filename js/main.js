@@ -54,7 +54,7 @@ function calculateCost() {
         for (var j = 0; j < COLS; j++) {
             var td = row.getElementsByTagName('td')[j];
             var input = td.getElementsByTagName('input')[0];
-            if(!input){
+            if (!input) {
                 continue;
             }
 
@@ -100,28 +100,28 @@ function start() {
         for (var j = 0; j < COLS; j++) {
             var td = row.getElementsByTagName('td')[j];
             var input = td.getElementsByTagName('input')[0];
-            if(!input){
+            if (!input) {
                 continue;
             }
 
             switch (input.value.toUpperCase()) {
                 case ('S'):
-                    game_state.grid.tiles[i][j].occupant = new SniperTower([i, j]);
+                    game_state.grid.tiles[i][j].add(new SniperTower([i, j]));
                     break;
                 case ('B'):
-                    game_state.grid.tiles[i][j].occupant = new Bunker([i, j]);
+                    game_state.grid.tiles[i][j].add(new Bunker([i, j]));
                     break;
                 case ('F'):
-                    game_state.grid.tiles[i][j].occupant = new Forest([i, j]);
+                    game_state.grid.tiles[i][j].add(new Forest([i, j]));
                     break;
                 case ('E'):
-                    game_state.grid.tiles[i][j].occupant = new ElectricFence([i, j]);
+                    game_state.grid.tiles[i][j].add(new ElectricFence([i, j]));
                     break;
                 case ('T'):
-                    game_state.grid.tiles[i][j].occupant = new TigerTrap([i, j]);
+                    game_state.grid.tiles[i][j].add(new TigerTrap([i, j]));
                     break;
                 case ('W'):
-                    game_state.grid.tiles[i][j].occupant = new WaterTrap([i, j]);
+                    game_state.grid.tiles[i][j].add(new WaterTrap([i, j]));
                     break;
                 default:
                     break;
@@ -229,6 +229,11 @@ function update() {
                 for (var i = 0; i < game_state.monsters.length; i++) {
                     var monster = game_state.monsters[i];
 
+                    if(monster.delay > 0){
+                        monster.delay -= 1;
+                        continue;
+                    }
+                    
                     //get list of possible moves
                     var possible_moves = grid.getTilesInRange(monster.location, 1);
 
@@ -264,11 +269,6 @@ function update() {
                 //  Spawn Monsters
                 //===
 
-                //update to current phase
-                game_state.last_phase = 'Spawn';
-
-                var grid = game_state.grid;
-
                 if (!grid.start_tile.is_empty && grid.start_tile.occupant instanceof Monster) {
 
                     //if monster is on start_tile add turn number to that monsters HP
@@ -277,9 +277,8 @@ function update() {
                 } else {
 
                     //else spawn new monster with HP equal to turn number
-                    var new_monster = new Monster(grid.start_tile.location, game_state.turn);
-                    grid.start_tile.occupant = new_monster;
-                    game_state.monsters.push(new_monster);
+                    grid.start_tile.add(new Monster(grid.start_tile.location, game_state.turn));
+                    game_state.monsters.push(grid.start_tile.occupant);
 
                 }
         }
