@@ -1,5 +1,6 @@
 const ROWS = 10;
 const COLS = 10;
+const BUDGET = 100;
 
 var game_state = {};
 game_state.turn = 0;
@@ -18,7 +19,69 @@ for (var i = 0; i < ROWS; i++) {
     html += '</tr>';
 }
 document.getElementById('game_board').innerHTML = html;
+
+//attach event listenters to inputs to update cost
+var inputs = document.getElementsByTagName('input');
+for (var i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener('change', function () {
+        var cost = calculateCost();
+        if(cost > BUDGET){
+            this.value = "";
+            alert('Max Budget of $' + BUDGET + ' exceeded!');
+            cost = calculateCost();
+        }
+        document.getElementById('cost').innerText = calculateCost();
+    });
+}
+
+//add event listenter to start the game
 document.getElementById('start_button').addEventListener('click', start);
+
+//update cost value on page
+document.getElementById('budget').innerText = BUDGET;
+
+function calculateCost() {
+    var cost = 0;
+    var table = document.getElementById('game_board');
+    for (var i = 0; i < ROWS; i++) {
+        var row = table.getElementsByTagName('tr')[i];
+        for (var j = 0; j < COLS; j++) {
+            var td = row.getElementsByTagName('td')[j];
+            var input = td.getElementsByTagName('input')[0];
+
+            switch (input.value.toUpperCase()) {
+                case ('S'):
+                    var tmp = new SniperTower();
+                    cost += tmp.cost;
+                    break;
+                case ('B'):
+                    var tmp = new Bunker();
+                    cost += tmp.cost;
+                    break;
+                case ('F'):
+                    var tmp = new Forest();
+                    cost += tmp.cost;
+                    break;
+                case ('E'):
+                    var tmp = new ElectricFence();
+                    cost += tmp.cost;
+                    break;
+                case ('T'):
+                    var tmp = new TigerTrap();
+                    cost += tmp.cost;
+                    break;
+                case ('W'):
+                    var tmp = new WaterTrap();
+                    cost += tmp.cost;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    return cost;
+}
 
 function start() {
     //go through and build board from inputs
