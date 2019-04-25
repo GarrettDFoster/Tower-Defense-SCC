@@ -19,3 +19,9 @@ table {
     display: grid;
     grid-template-columns: 520px 280px;
   }
+
+  .start, .end{
+    background-color: #000000;
+    color: #FFFFFF;
+    font-style: bold;
+  }

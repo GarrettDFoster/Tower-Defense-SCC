@@ -14,7 +14,13 @@ var html = '<caption>Input your defense! Click "Start" when ready.</caption>';
 for (var i = 0; i < ROWS; i++) {
     html += '<tr>';
     for (var j = 0; j < COLS; j++) {
-        html += '<td><input type="text" minlength="0" maxlength="1" size="2"></td>';
+        if (i == ROWS - 1 && j == 0) { //checking for start or end tile
+            html += '<td class="start">Start</td>';
+        } else if (i == 0 && j == COLS - 1) {
+            html += '<td class="end">End</td>';
+        } else {
+            html += '<td><input type="text" minlength="0" maxlength="1" size="2"></td>';
+        }
     }
     html += '</tr>';
 }
@@ -25,7 +31,7 @@ var inputs = document.getElementsByTagName('input');
 for (var i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener('change', function () {
         var cost = calculateCost();
-        if(cost > BUDGET){
+        if (cost > BUDGET) {
             this.value = "";
             alert('Max Budget of $' + BUDGET + ' exceeded!');
             cost = calculateCost();
@@ -48,6 +54,9 @@ function calculateCost() {
         for (var j = 0; j < COLS; j++) {
             var td = row.getElementsByTagName('td')[j];
             var input = td.getElementsByTagName('input')[0];
+            if(!input){
+                continue;
+            }
 
             switch (input.value.toUpperCase()) {
                 case ('S'):
@@ -91,6 +100,9 @@ function start() {
         for (var j = 0; j < COLS; j++) {
             var td = row.getElementsByTagName('td')[j];
             var input = td.getElementsByTagName('input')[0];
+            if(!input){
+                continue;
+            }
 
             switch (input.value.toUpperCase()) {
                 case ('S'):
@@ -310,7 +322,13 @@ function update() {
             for (var j = 0; j < grid.columns; j++) {
                 var t = grid.tiles[i][j];
                 if (t.is_empty) {
-                    html += '<td>&nbsp;</td>';
+                    if (i == ROWS - 1 && j == 0) { //checking for start or end tile
+                        html += '<td class="start">Start</td>';
+                    } else if (i == 0 && j == COLS - 1) {
+                        html += '<td class="end">End</td>';
+                    } else {
+                        html += '<td>&nbsp;</td>';
+                    }
                 } else {
                     html += '<td bgcolor="' + t.occupant.bg_color + '">' + t.occupant.label + '<sup>' + t.occupant.hit_points + '</sup></td>';
                 }
