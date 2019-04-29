@@ -77,9 +77,16 @@ function getInputString() {
 }
 
 //attach event listenter to simulate button
-document.getElementById('button_1').addEventListener('click', function () {
+document.getElementById('simulate_button').addEventListener('click', function () {
     var href = location.href.split('/');
     href[href.length - 1] = 'view.html?design=' + getInputString();
+    location.href = href.join('/');
+});
+
+//attach event listenter to reset button
+document.getElementById('reset_button').addEventListener('click', function () {
+    var href = location.href.split('/');
+    href[href.length - 1] = 'view.html';
     location.href = href.join('/');
 });
 
