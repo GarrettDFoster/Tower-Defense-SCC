@@ -86,7 +86,7 @@ document.getElementById('simulate_button').addEventListener('click', function ()
 //attach event listenter to reset button
 document.getElementById('reset_button').addEventListener('click', function () {
     var href = location.href.split('/');
-    href[href.length - 1] = 'view.html';
+    href[href.length - 1] = 'edit.html';
     location.href = href.join('/');
 });
 
