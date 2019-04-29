@@ -79,7 +79,7 @@ function getInputString() {
 //attach event listenter to simulate button
 document.getElementById('button_1').addEventListener('click', function () {
     var href = location.href.split('/');
-    href[href.length - 1] = '/view.html?design=' + getInputString();
+    href[href.length - 1] = 'view.html?design=' + getInputString();
     location.href = href.join('/');
 });
 
