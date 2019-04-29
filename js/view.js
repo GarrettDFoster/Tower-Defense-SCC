@@ -37,7 +37,9 @@ resume();
 
 //attach event listener to the edit button
 document.getElementById('edit_button').addEventListener('click', function () {
-    location.href = location.origin + '/edit.html?design=' + game_state.design;
+    var href = location.href.split('/');
+    href[href.length-1] = 'edit.html?design=' + game_state.design;
+    location.href = href.join('/');
 });
 
 //===
