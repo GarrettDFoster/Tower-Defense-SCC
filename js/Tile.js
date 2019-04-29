@@ -25,6 +25,7 @@ class Tile {
 
     clear() {
         this.occupant = undefined;
+        this.trap = undefined;
     }
 
     add(entity){

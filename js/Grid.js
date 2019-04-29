@@ -3,7 +3,8 @@ class Grid {
     columns; //the number of columns on the gameboard
     tiles; //array that holds all tiles on grid
     start_tile; //pointer to the starting tile in the grid
-    end_tile;// pointer to the ending tile in the grid    
+    end_tile;// pointer to the ending tile in the grid
+    cost = 0;
 
     constructor(rows, columns) {
         this.rows = rows;
@@ -114,6 +115,47 @@ class Grid {
                 old_tile.clear();
             }
         }
+    }
+
+    buildDefense(string) {
+        var cost = 0;
+
+        //go through and build board from 100 character string
+        for (var i = 0; i < this.rows; i++) {
+            for (var j = 0; j < this.columns; j++) {
+                //clear tile before setting value
+                game_state.grid.tiles[i][j].clear();
+
+                //set tile based on character value in string
+                var input = string[i * this.rows + j]
+                switch (input.toUpperCase()) {
+                    case ('S'):
+                        game_state.grid.tiles[i][j].add(new SniperTower([i, j]));
+                        break;
+                    case ('B'):
+                        game_state.grid.tiles[i][j].add(new Bunker([i, j]));
+                        break;
+                    case ('F'):
+                        game_state.grid.tiles[i][j].add(new Forest([i, j]));
+                        break;
+                    case ('E'):
+                        game_state.grid.tiles[i][j].add(new ElectricFence([i, j]));
+                        break;
+                    case ('T'):
+                        game_state.grid.tiles[i][j].add(new TigerTrap([i, j]));
+                        break;
+                    case ('W'):
+                        game_state.grid.tiles[i][j].add(new WaterTrap([i, j]));
+                        break;
+                    default:
+                        break;
+                }
+                if (game_state.grid.tiles[i][j].occupant) {
+                    cost += game_state.grid.tiles[i][j].occupant.cost;
+                }
+            }
+        }
+        this.cost = cost;
     }
 
 }
