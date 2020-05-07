@@ -203,7 +203,7 @@ function update() {
         //  Draw current state to screen
         //===
 
-        var html = '<caption>Turn Number: ' + Math.floor(game_state.turn/10) + 'X , Phase: ' + game_state.phase + '</caption>';
+        var html = '<caption>Turn Number: ' + Math.floor(game_state.turn/10) + '⬛ , Phase: ' + game_state.phase + '</caption>';
         for (var i = 0; i < grid.rows; i++) {
             html += '<tr>';
             for (var j = 0; j < grid.columns; j++) {
