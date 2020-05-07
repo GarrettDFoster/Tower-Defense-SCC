@@ -32,8 +32,8 @@ function resume() {
     document.getElementById('pause_button').style.display = 'inline';
 }
 
-//hide resume button initially;
-resume();
+//hide pause button initially;
+pause();
 
 //attach event listener to the edit button
 document.getElementById('edit_button').addEventListener('click', function () {
