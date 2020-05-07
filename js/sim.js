@@ -49,6 +49,31 @@ document.getElementById('edit_button').addEventListener('click', function () {
 //build the tower defense
 game_state.grid.buildDefense(game_state.design);
 
+//===
+//  Draw current state to screen
+//===
+
+var html = '<caption>Turn Number: ' + game_state.turn + ', Phase: ' + game_state.phase + '</caption>';
+for (var i = 0; i < grid.rows; i++) {
+    html += '<tr>';
+    for (var j = 0; j < grid.columns; j++) {
+        var t = grid.tiles[i][j];
+        if (t.is_empty) {
+            if (i == ROWS - 1 && j == 0) { //checking for start or end tile
+                html += '<td class="start">Start</td>';
+            } else if (i == 0 && j == COLS - 1) {
+                html += '<td class="end">End</td>';
+            } else {
+                html += '<td>&nbsp;</td>';
+            }
+        } else {
+            html += '<td bgcolor="' + t.occupant.bg_color + '">' + t.occupant.label + '<sup>' + t.occupant.hit_points + '</sup></td>';
+        }
+    }
+    html += '</tr>';
+}
+document.getElementById('game_board').innerHTML = html;
+
 //start the simulation after a 1 second delay
 window.setTimeout(
     window.setInterval(update, 1),
