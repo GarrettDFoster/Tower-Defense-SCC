@@ -32,8 +32,15 @@ function resume() {
     document.getElementById('pause_button').style.display = 'inline';
 }
 
-//hide resume button initially;
-resume();
+//hide pause button initially;
+pause();
+
+//attach event listener to the edit button
+document.getElementById('edit_button').addEventListener('click', function () {
+    var href = location.href.split('/');
+    href[href.length - 1] = 'edit.html?design=' + game_state.design;
+    location.href = href.join('/');
+});
 
 //===
 //   Simulation Engine
