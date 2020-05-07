@@ -33,7 +33,7 @@ function resume() {
 }
 
 //hide pause button initially;
-pause();
+resume();
 
 //attach event listener to the edit button
 document.getElementById('edit_button').addEventListener('click', function () {
