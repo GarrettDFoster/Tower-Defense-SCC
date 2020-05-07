@@ -43,10 +43,10 @@ resume();
 game_state.grid.buildDefense(game_state.design);
 
 //start the simulation after a 1 second delay
-window.setTimeout(
+/*window.setTimeout(
     window.setInterval(update, 1000 / 3),
     1000);
-
+*/
 //update loops through turn order: Shoot Monsters > Move Monsters > Spawn Monster
 function update() {
 

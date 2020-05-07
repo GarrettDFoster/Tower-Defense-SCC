@@ -125,55 +125,8 @@ function update() {
                         continue;
                     }
 
-                    //get random move for monster
-                    var direction = [];
-                    if(isOpen(grid.nextUp(monster.location))){
-                        direction.push('up');
-                        direction.push('up');
-                        direction.push('up');
-                        direction.push('up');
-                        direction.push('up');
-                        direction.push('up');
-                        direction.push('up');
-                        direction.push('up');
-                        direction.push('up'); //push 9 times to bias selection of up
-                    }
-                    if (isOpen(grid.nextRight(monster.location))){
-                        direction.push('right');
-                        direction.push('right');
-                        direction.push('right');
-                        direction.push('right');
-                        direction.push('right');
-                        direction.push('right');
-                        direction.push('right');
-                        direction.push('right');
-                        direction.push('right'); //push 9 times to bias selection of right
-                    }
-                     if (isOpen(grid.nextDown(monster.location))){
-                        direction.push('down');
-                    }
-                    if (isOpen(grid.nextLeft(monster.location))){
-                        direction.push('left');
-                    }
-                    if(direction.length == 0){
-                        direction = 'stuck';
-                    }else{
-                        direction = direction[Math.floor(Math.random() * Math.floor(direction.length))];
-                    }
-
-                    function isOpen(location) {
-                        //check if point is defined
-                        if (typeof (location) === 'undefined') {
-                            return false;
-                        }
-            
-                        //check if point is unblocked
-                        if (location.is_blocked) {
-                            return false;
-                        }
-            
-                        return true;
-                    }
+                    //get best move for monster
+                    var direction = monster.chooseMove(grid);
 
                     //check to see if not moving
                     if (direction === 'stuck') {
@@ -250,7 +203,7 @@ function update() {
         //  Draw current state to screen
         //===
 
-        var html = '<caption>Turn Number: ' + game_state.turn + ', Phase: ' + game_state.phase + '</caption>';
+        var html = '<caption>Turn Number: ' + Math.floor(game_state.turn/10) + 'X , Phase: ' + game_state.phase + '</caption>';
         for (var i = 0; i < grid.rows; i++) {
             html += '<tr>';
             for (var j = 0; j < grid.columns; j++) {
