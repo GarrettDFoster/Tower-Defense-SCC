@@ -5,7 +5,7 @@ class Bunker extends Tower{
     
     constructor(location) {
         super(location, 20);
-        this.cost = 15;
+        this.cost = 10;
         this.damage = 1;
         this.max_targets = 4;
         this.range = 2;

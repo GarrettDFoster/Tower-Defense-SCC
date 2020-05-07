@@ -4,7 +4,7 @@
 document.getElementById('budget').innerText = BUDGET;
 
 //generate inputs so users can design/edit their tower defense, set the value of each based on the design string
-var html = '<caption>Input your defense! Then click "Simulate" to test it out.</caption>';
+var html = '<caption>Input your defense! Then click "Test" to see how it does.</caption>';
 for (var i = 0; i < ROWS; i++) {
     html += '<tr>';
     for (var j = 0; j < COLS; j++) {
@@ -76,10 +76,10 @@ function getInputString() {
     return input_string;
 }
 
-//attach event listenter to simulate button
-document.getElementById('simulate_button').addEventListener('click', function () {
+//attach event listenter to test button
+document.getElementById('test_button').addEventListener('click', function () {
     var href = location.href.split('/');
-    href[href.length - 1] = 'view.html?design=' + getInputString();
+    href[href.length - 1] = 'test.html?design=' + getInputString();
     location.href = href.join('/');
 });
 

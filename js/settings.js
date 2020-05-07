@@ -8,7 +8,7 @@ const BUDGET = 100;
 
 var game_state = {};
 game_state.turn = 0;
-game_state.grid = new Grid(ROWS,COLS);
+game_state.grid = new Grid(ROWS, COLS);
 game_state.monsters = [];
 game_state.paused = false;
 game_state.phase = 'Shoot'; //lets us animate the different steps to give a bit more info

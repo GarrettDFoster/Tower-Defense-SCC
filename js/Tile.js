@@ -4,7 +4,7 @@ class Tile {
     trap = undefined; //this is a hack to keep the traps from dissapearing
 
     constructor(row, column) {
-        this.location = [row,column];
+        this.location = [row, column];
     }
 
     get is_empty() {
@@ -28,9 +28,9 @@ class Tile {
         this.trap = undefined;
     }
 
-    add(entity){
+    add(entity) {
         this.occupant = entity;
-        if(entity instanceof Trap){
+        if (entity instanceof Trap) {
             this.trap = entity;
         }
     }

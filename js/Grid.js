@@ -82,41 +82,6 @@ class Grid {
         t.add(t.trap);
     }
 
-    move(entity, new_location) {
-        if (entity.delay > 0) {
-            entity.delay -= 1;
-        } else {
-            var old_tile = this.tiles[entity.location[0]][entity.location[1]];
-            var new_tile = this.tiles[new_location[0]][new_location[1]];
-
-            //update new tile
-            if (new_tile.trap) {
-                //delay the monster
-                entity.delay = new_tile.trap.delay;
-
-                //damage the monster
-                new_tile.trap.giveDamage(entity);
-
-                //damage the trap
-                entity.giveDamage(new_tile.trap);
-            }
-            if (!entity.is_dead) {
-                //update the tile's occupant
-                new_tile.add(entity);
-
-                //update the entities location
-                entity.location = new_tile.location;
-            }
-
-            //update old tile's occupant
-            if (old_tile.trap) {
-                old_tile.add(old_tile.trap);
-            } else {
-                old_tile.clear();
-            }
-        }
-    }
-
     buildDefense(string) {
         var cost = 0;
 
@@ -156,6 +121,51 @@ class Grid {
             }
         }
         this.cost = cost;
+    }
+
+    getTile(location) {
+        location = location.concat();
+        return this.tiles[location[0]][location[1]];
+    }
+
+    nextUp(location) {
+        location = location.concat();
+        if (location[0] > 0) {
+            location[0] -= 1; //reduce the row number by 1
+            return this.tiles[location[0]][location[1]];
+        } else {
+            return undefined;
+        }
+    }
+
+    nextRight(location) {
+        location = location.concat();
+        if (location[1] < 9) {
+            location[1] += 1; //increase the column number by 1
+            return this.tiles[location[0]][location[1]];
+        } else {
+            return undefined;
+        }
+    }
+
+    nextDown(location) {
+        location = location.concat();
+        if (location[0] < 9) {
+            location[0] += 1; //increase the row number by 1
+            return this.tiles[location[0]][location[1]];
+        } else {
+            return undefined;
+        }
+    }
+
+    nextLeft(location) {
+        location = location.concat();
+        if (location[1] > 0) {
+            location[1] -= 1; //reduce the column number by 1
+            return this.tiles[location[0]][location[1]];
+        } else {
+            return undefined;
+        }
     }
 
 }

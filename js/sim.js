@@ -35,13 +35,6 @@ function resume() {
 //hide resume button initially;
 resume();
 
-//attach event listener to the edit button
-document.getElementById('edit_button').addEventListener('click', function () {
-    var href = location.href.split('/');
-    href[href.length-1] = 'edit.html?design=' + game_state.design;
-    location.href = href.join('/');
-});
-
 //===
 //   Simulation Engine
 //===
@@ -51,8 +44,8 @@ game_state.grid.buildDefense(game_state.design);
 
 //start the simulation after a 1 second delay
 window.setTimeout(
-    window.setInterval(update,1000/3),
-1000);
+    window.setInterval(update, 1000 / 3),
+    1000);
 
 //update loops through turn order: Shoot Monsters > Move Monsters > Spawn Monster
 function update() {
@@ -125,32 +118,28 @@ function update() {
                         continue;
                     }
 
-                    //get list of possible moves
-                    var possible_moves = grid.getTilesInRange(monster.location, 1);
+                    //get best move for monster
+                    var direction = monster.chooseMove(grid);
 
-                    //go through list of possible moves
-                    for (var j = 0; j < possible_moves.length; j++) {
-                        var move_tile = possible_moves[j];
-
-                        if (move_tile.is_blocked) {
-                            if (move_tile.occupant instanceof Structure) {
-                                //damage structures in way
-                                monster.giveDamage(move_tile.occupant);
-
-                                //check for and remove broken structures
-                                if (move_tile.occupant.is_dead) {
-                                    move_tile.clear();
+                    //check to see if not moving
+                    if (direction === 'stuck') {
+                        //attack neighbor
+                        var tiles = [
+                            grid.nextUp(monster.location),
+                            grid.nextRight(monster.location),
+                            grid.nextDown(monster.location),
+                            grid.nextLeft(monster.location)
+                        ];
+                        for (var t = 0; t < tiles.length; t++) {
+                            if (tiles[t]) {
+                                monster.giveDamage(tiles[t].occupant);
+                                if (tiles[t].occupant.is_dead) {
+                                    tiles[t].clear();
                                 }
-                            } else {
-                                //cannot move through monsters
-                                continue;
                             }
-                        } else {
-                            //else update position of monster
-                            grid.move(monster, move_tile.location);
-                            break;
                         }
-
+                    } else {
+                        monster.move(direction, grid);
                     }
                 }
                 break;

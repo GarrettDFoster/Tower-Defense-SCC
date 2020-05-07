@@ -5,11 +5,11 @@ class ElectricFence extends Structure {
 
     constructor(location) {
         super(location, 20);
-        this.cost = 10;
+        this.cost = 5;
         this.damage = 1; //when attacked
     }
 
-    takeDamage(damage,source) {
+    takeDamage(damage, source) {
         this.hit_points -= damage;
         this.giveDamage(source);
         if (this.hit_points < 1) {

@@ -22,11 +22,14 @@
 <body>
     <div id="wrapper">
         <div>
-            <table id='game_board'></table>
+            <table id='game_board'>
+                <caption>Loading...</caption>
+            </table>
         </div>
         <div>
-            <button id='test_button'>Test</button>
-            <button id='reset_button'>Reset</button>
+            <button id='pause_button'>Pause</button>
+            <button id='resume_button'>Resume</button>
+            <button id='edit_button'>Edit</button>
             <p>Cost: $<span id='cost'>0</span> of $<span id='budget'>0</span></p>
             <ul>
                 <li>S = Sniper Tower ($10)</li>
@@ -36,10 +39,13 @@
                 <li>T = Tiger Trap ($5)</li>
                 <li>W = Water Trap ($5)</li>
             </ul>
+            <p>
+                In "Test Mode" enemies (M) move randomly.
+            </p>
         </div>
     </div>
     <script src="js/settings.js"></script>
-    <script src="js/edit.js"></script>
+    <script src="js/test.js"></script>
 </body>
 
 </html>

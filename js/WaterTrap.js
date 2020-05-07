@@ -5,7 +5,7 @@ class WaterTrap extends Trap {
 
     constructor(location) {
         super(location, 100);
-        this.cost = 2;
+        this.cost = 5;
         this.delay = 1;
     }
 }

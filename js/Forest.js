@@ -5,6 +5,6 @@ class Forest extends Structure {
 
     constructor(location) {
         super(location, 25);
-        this.cost = 2;
+        this.cost = 5;
     }
 }

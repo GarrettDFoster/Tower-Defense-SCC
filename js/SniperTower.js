@@ -5,7 +5,7 @@ class SniperTower extends Tower{
     
     constructor(location) {
         super(location, 5);
-        this.cost = 20;
+        this.cost = 10;
         this.damage = 5;
         this.max_targets = 1;
         this.range = 3;
