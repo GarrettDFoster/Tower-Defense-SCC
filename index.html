@@ -11,38 +11,21 @@
         destroy the enemies on or along their path of attack. Strategic choice and positioning of defensive structures
         is an essential strategy of the genre. For your individual project, you are challenged to design a defense that
         will keep any enemies from reaching the end for as long as possible.</p>
-    <h3>
-        <a
-            href="https://docs.google.com/spreadsheets/d/1u-Y4NweH6irD7LtyOpxoshQpv6vr2A8WRlWOaafLEGI/edit?usp=sharing">
-                Leaderboard
-        </a>
-    </h3>
-
     <h2>Basics of the Game</h2>
-    <p>The playing field will be a 10 x 10 grid with the enemy starting point at the lower left and the ending point at
-        the top right. One enemy will spawn (i.e. leave the starting point) each step with
-        their hit points (i.e. health) being 1 point higher than the previously spawned enemy. In other words, the first
-        enemy spawned will have 1 hit point, the second will have 2, the third will have 3 and so on until the game
-        ends.</p>
-    <p>Enemies will attempt to move closer to the tower each step. They will attempt to move up, right, down, and then
-        left (in that order) until a move is completed that turn. Any obstacle that prevents movement will receive 1
-        damage from the enemy. For example, if the enemy has a barrier above them they will first try to move up, see
-        the barrier, deal it 1 damage and then try to move to the right. If an enemy moves into a trap that trap also
-        takes 1 damage. All enemies move at the same speed (1 box per turn).</p>
-    <p>The game ends when any of the enemies reach the ending point (i.e. top right corner). Your score is based on the
-        number of steps (i.e. the amount of time) your defense is able to hold off the enemies; higher is better.</p>
+    <p>The playing field will be a 10 x 10 grid with the enemy starting point at the lower left and the endpoint at the top right as shown in Figure 1 below. One enemy will spawn (i.e. be created) each step with their hit points (i.e. health) being equal to the turn counter. In other words, the first enemy spawned will have 1 hit point, the second will have 2, the third will have 3 and so on until the game ends.</p>
+    <p>Enemies will attempt to move closer to the tower each turn. They are allowed to move up, right, down, or left each turn; they cannot move diagonally. All enemies move at the same speed; 1 box per turn. The game ends when any of the enemies reach the endpoint (i.e. top right corner). Your score is based on the number of turns (i.e. the amount of time) your defense is able to hold off the enemies; higher is better.</p>
 
     <h2>Designing your Defense</h2>
     <p>When designing your defense there a few things to keep in mind:</p>
     <ul>
-        <li>All enemies spawn at the same (Start) point</li>
-        <li>Enemies will get progressively tougher (higher HP)</li>
-        <li>Enemies must always have at least 1 clear path the endpoint</li>
-        <li>Enemies will damage adjacent structures</li>
-        <li>Unlike other tower defense games, you will not be able to upgrade or heal your structures once the game
-            starts</li>
         <li>Your budget will be limited to $100</li>
-        <li>You can build as many structures as your budget (and the playing field) allow</li>
+<li>You can build as many structures as your budget (and the playing field) allow</li>
+<li>All enemies spawn at the same (starting) point</li>
+<li>Enemies will get progressively tougher (higher HP)</li>
+<li>Enemies must always have at least 1 clear path the endpoint (Traps do not “block” a path)</li>
+<li>Enemies will damage adjacent structures and monsters if they are unable to move</li>
+<li>Unlike other tower defense games, you will not be able to upgrade or heal your structures once the game starts</li>
+        
     </ul>
     <p>Click the button below to get started designing your tower defense!</p>
     <button onclick="location.href = location.href + 'edit.html'">Create Defense</button>
